@@ -1,16 +1,34 @@
 package waggoner.com.audioexamples;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import waggoner.com.audioexamples.drumKit.DrumMixer;
 
 public class MainActivity extends AppCompatActivity {
 
+    DrumMixer firstMixer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        firstMixer = new DrumMixer(this,1);
+        firstMixer.generateDefaultChannels(this);
+        Button btn = new Button(this);
+        btn.setText("Press me for noise");
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstMixer.getChannel(0).play();
+
+            }
+        });
+        setContentView(btn);
+
     }
 
     @Override
