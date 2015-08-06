@@ -12,6 +12,7 @@ SoundPool
 MediaPLayer
 MediaRecorder
 AudioTrack
+AudioEffect
 SuperPowered
 OpenSLES
 
