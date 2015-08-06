@@ -2,7 +2,7 @@
 
 Goals:
 
-The goals of this project are pretty simple.  I'm going to demonstrate all of the Audio pathways I'm currently aware of (and can get implemented in time) to demonstrate I/O.
+The goals of this project are pretty simple.  I'm going to demonstrate all of the Audio pathways I'm currently aware of (and can get implemented in time for this talk...) to demonstrate I/O.  I specifically want to highlight the varying performance characteristics of the audio approaches, as well as demonstrating their implemenation difficulty.
 
 This will include Java and C versions.
 
