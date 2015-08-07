@@ -89,7 +89,7 @@ public class MediaPlayerSource implements AudioSource{
     }
 
     public void rewind() {
-        mySource.reset();;
+        mySource.seekTo(0);;
     }
 
     public void setOnCompletionListener(MediaPlayer.OnCompletionListener listener){
