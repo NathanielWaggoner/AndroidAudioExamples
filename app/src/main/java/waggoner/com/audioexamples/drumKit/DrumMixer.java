@@ -4,7 +4,7 @@ import android.content.Context;
 
 import waggoner.com.audioexamples.R;
 import waggoner.com.audioexamples.core.Channel;
-import waggoner.com.audioexamples.core.MediaPlayerSource;
+import waggoner.com.audioexamples.sources.MediaPlayerSource;
 import waggoner.com.audioexamples.core.Mixer;
 
 /**
@@ -20,6 +20,7 @@ public class DrumMixer implements Mixer {
 
     public void generateDefaultChannels(Context context) {
         for (int i = 0; i < channels.length; i++) {
+            // you do not really want to use media players this way.  They're not intended for theses kinds of short, repeated sounds
             channels[i] = new Drum(new MediaPlayerSource(context, R.raw.cowbell),null);
         }
 

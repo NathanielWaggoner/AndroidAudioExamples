@@ -1,4 +1,4 @@
-package waggoner.com.audioexamples.core;
+package waggoner.com.audioexamples.sources;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -6,16 +6,22 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 
+import java.io.FileDescriptor;
 import java.io.IOException;
+
+import waggoner.com.audioexamples.core.AudioSource;
 
 /**
  * Created by nathanielwaggoner on 8/6/15.
  */
-public class MediaPlayerSource implements AudioSource{
+public class MediaPlayerSource implements AudioSource {
 
     public static String TAG = MediaPlayerSource.class.getName();
     MediaPlayer mySource;
-
+    /**
+     * TODO:
+     * or setDataSource(String), or setDataSource(FileDescriptor, long, long)
+     */
 
     /**
      * Create a source from raw resources
@@ -63,6 +69,16 @@ public class MediaPlayerSource implements AudioSource{
             mySource.prepare();
         } catch(IOException exception) {
             Log.e(TAG,Log.getStackTraceString(exception));
+        }
+    }
+
+    public MediaPlayerSource(FileDescriptor fd) {
+        try {
+            mySource = new MediaPlayer();
+            mySource.setDataSource(fd);
+            mySource.prepare();
+        } catch(IOException exception) {
+
         }
     }
 

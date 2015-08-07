@@ -5,7 +5,7 @@ import android.media.MediaPlayer;
 import waggoner.com.audioexamples.core.AudioSource;
 import waggoner.com.audioexamples.core.Channel;
 import waggoner.com.audioexamples.core.Effect;
-import waggoner.com.audioexamples.core.MediaPlayerSource;
+import waggoner.com.audioexamples.sources.MediaPlayerSource;
 
 /**
  * Created by nathanielwaggoner on 8/6/15.

@@ -5,9 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import waggoner.com.audioexamples.drumKit.Drum;
 import waggoner.com.audioexamples.drumKit.DrumMixer;
+import waggoner.com.audioexamples.sources.MediaPlayerSource;
+import waggoner.com.audioexamples.sources.SoundPoolSource;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,10 +21,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        firstMixer = new DrumMixer(this,1);
-        firstMixer.generateDefaultChannels(this);
+        firstMixer = new DrumMixer(this,2);
+        firstMixer.setChannel(0, new Drum(new MediaPlayerSource(this, R.raw.cowbell), null));
+        firstMixer.setChannel(1, new Drum(new SoundPoolSource(this, R.raw.cowbell), null));
+//        firstMixer.generateDefaultChannels(this);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout.setOrientation(LinearLayout.VERTICAL);
         Button btn = new Button(this);
-        btn.setText("Press me for noise");
+        btn.setText("Media Player Button");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -27,7 +37,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        setContentView(btn);
+        Button second = new Button(this);
+        second.setText("Sound Pool Button");
+        second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstMixer.getChannel(1).play();
+
+            }
+        });
+        layout.addView(btn);
+        layout.addView(second);
+
+        setContentView(layout);
 
     }
 
