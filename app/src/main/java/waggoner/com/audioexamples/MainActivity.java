@@ -13,17 +13,21 @@ import waggoner.com.audioexamples.drumKit.Drum;
 import waggoner.com.audioexamples.drumKit.DrumMixer;
 import waggoner.com.audioexamples.sources.MediaPlayerSource;
 import waggoner.com.audioexamples.sources.SoundPoolSource;
+import waggoner.com.audioexamples.sources.StaticAudioTrackSource;
 
 public class MainActivity extends AppCompatActivity {
 
     DrumMixer firstMixer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        firstMixer = new DrumMixer(this,2);
+        firstMixer = new DrumMixer(this,3);
         firstMixer.setChannel(0, new Drum(new MediaPlayerSource(this, R.raw.cowbell), null));
         firstMixer.setChannel(1, new Drum(new SoundPoolSource(this, R.raw.cowbell), null));
+        firstMixer.setChannel(2, new Drum(new StaticAudioTrackSource(this, R.raw.cowbell), null));
+
 //        firstMixer.generateDefaultChannels(this);
         LinearLayout layout = new LinearLayout(this);
         layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -46,8 +50,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Button third = new Button(this);
+        third.setText("AudioTrack Button");
+        third.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstMixer.getChannel(2).play();
+            }
+        });
         layout.addView(btn);
         layout.addView(second);
+        layout.addView(third);
 
         setContentView(layout);
 
