@@ -21,7 +21,7 @@ public class DrumMixer implements Mixer {
     public void generateDefaultChannels(Context context) {
         for (int i = 0; i < channels.length; i++) {
             // you do not really want to use media players this way.  They're not intended for theses kinds of short, repeated sounds
-            channels[i] = new Drum(new MediaPlayerSource(context, R.raw.cowbell),null);
+            channels[i] = new Drum(new MediaPlayerSource(context, R.raw.claves),null);
         }
 
     }

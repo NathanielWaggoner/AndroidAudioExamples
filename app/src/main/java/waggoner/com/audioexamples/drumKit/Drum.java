@@ -2,6 +2,7 @@ package waggoner.com.audioexamples.drumKit;
 
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import waggoner.com.audioexamples.core.AudioSource;
 import waggoner.com.audioexamples.core.Channel;
@@ -79,10 +80,12 @@ public class Drum implements Channel {
          */
         @Override
         public void onMarkerReached(AudioTrack track){
+            Log.e("XappTest", "Marker was reached!");
             if(track.getPlayState()!= AudioTrack.PLAYSTATE_STOPPED){
                 track.stop();
             }
             track.reloadStaticData();
+            track.setPlaybackHeadPosition(0);
         };
 
         /**

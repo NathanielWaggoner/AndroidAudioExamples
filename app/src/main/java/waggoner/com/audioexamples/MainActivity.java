@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         firstMixer = new DrumMixer(this,3);
-        firstMixer.setChannel(0, new Drum(new MediaPlayerSource(this, R.raw.cowbell), null));
-        firstMixer.setChannel(1, new Drum(new SoundPoolSource(this, R.raw.cowbell), null));
-        firstMixer.setChannel(2, new Drum(new StaticAudioTrackSource(this, R.raw.cowbell), null));
+        firstMixer.setChannel(0, new Drum(new MediaPlayerSource(this, R.raw.claves), null));
+        firstMixer.setChannel(1, new Drum(new SoundPoolSource(this, R.raw.claves), null));
+        firstMixer.setChannel(2, new Drum(new StaticAudioTrackSource(this, R.raw.claves), null));
 
 //        firstMixer.generateDefaultChannels(this);
         LinearLayout layout = new LinearLayout(this);

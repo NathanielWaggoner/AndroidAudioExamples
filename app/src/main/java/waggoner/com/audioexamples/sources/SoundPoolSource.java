@@ -7,6 +7,8 @@ import android.media.SoundPool;
 import waggoner.com.audioexamples.core.AudioSource;
 
 /**
+ *
+ * Sound pools are easier than audio tracks, but faster than MediaPlayers.  We like them!
  * Created by nathanielwaggoner on 8/7/15.
  */
 public class SoundPoolSource implements AudioSource {
