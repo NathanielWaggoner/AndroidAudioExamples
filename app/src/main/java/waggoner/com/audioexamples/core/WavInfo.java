@@ -40,7 +40,7 @@ public class WavInfo {
                 if(new String(bytes,"US-ASCII").equals("data")) {
                     dataOffset=dataOffset+skipTotal;
                     shouldUpdateDataLength = true;
-                    Log.e("XapPTest","DataOffset "+ dataOffset);
+                    Log.e("AudioTest","DataOffset "+ dataOffset);
                 }
                 // read chunk length
                 if (in.read(bytes) < 0) {
@@ -56,7 +56,7 @@ public class WavInfo {
                 if(shouldUpdateDataLength) {
                     dataLength=skipAmt;
                     shouldUpdateDataLength = false;
-                    Log.e("XapPTest","DataLength: "+dataLength);
+                    Log.e("AudioTest","DataLength: "+dataLength);
                 }
 
                 in.skip(skipAmt);
@@ -72,6 +72,6 @@ public class WavInfo {
 
     static void printDescriptor(byte[] bytes)
             throws IOException {
-        Log.e("XappTest", "found '" + new String(bytes, "US-ASCII") + "' descriptor");
+        Log.e("AudioTest", "found '" + new String(bytes, "US-ASCII") + "' descriptor");
     }
 }

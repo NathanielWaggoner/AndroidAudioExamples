@@ -35,6 +35,7 @@ public class Drum implements Channel {
             mOnCompletionListener = new MediaPlayerOnCompletionListener();
             ((MediaPlayerSource) mAudioSource).setOnCompletionListener(mOnCompletionListener);
         } else if (mAudioSource instanceof StaticAudioTrackSource) {
+            Log.e("AudioTest","Settong plabakupdate listener");
             StaticAudioTrackSource source = (StaticAudioTrackSource) mAudioSource;
             source.setPlaybackPositionUpdateListener(mOnPlaybackPositioNupdateListener);
         }
@@ -80,7 +81,7 @@ public class Drum implements Channel {
          */
         @Override
         public void onMarkerReached(AudioTrack track){
-            Log.e("XappTest", "Marker was reached!");
+            Log.e("AudioTest", "Marker was reached!");
             if(track.getPlayState()!= AudioTrack.PLAYSTATE_STOPPED){
                 track.stop();
             }

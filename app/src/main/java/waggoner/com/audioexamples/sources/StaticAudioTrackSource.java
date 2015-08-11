@@ -17,11 +17,14 @@ import waggoner.com.audioexamples.core.WavInfo;
 
 /**
  * Now things get complicated.
- *
+ * <p/>
  * We've got to make sure we're not using MP3's at this point, mostly because its a PITA to convert them around.
- *
+ * <p/>
  * So we'll stick with wavs.  So some
+ * <p/>
  *
+ * AudioTracks have a less favorible processor scheduling priority than SoundPool so you should prefer sound pool typically.
+ * 
  * Created by nathanielwaggoner on 8/7/15.
  */
 public class StaticAudioTrackSource implements AudioSource {
@@ -30,13 +33,13 @@ public class StaticAudioTrackSource implements AudioSource {
 
     public static String TAG = StaticAudioTrackSource.class.getName();
     AudioTrack mAudioTrack;
-    int minBufferSize;
-    // file bit rate
-    int bitRate;
+
     // file sample rate
     int sampleRate;
     // number of channels in the file
     int channelCount;
+    // the channel configuration contstant to use.  Derived from channel count.
+    int channelConfig;
     // long as returned fom MediaExtractor
     long duration;
     MediaExtractor mediaExtractor = new MediaExtractor();
@@ -61,8 +64,8 @@ public class StaticAudioTrackSource implements AudioSource {
             extractMediaData(afd);
             WavInfo.parseWave(context.getResources().openRawResource(resource));
             afd.close();
-        } catch (IOException e){
-            Log.e("XapPTest",Log.getStackTraceString(e));
+        } catch (IOException e) {
+            Log.e("AudioTest", Log.getStackTraceString(e));
         }
 
     }
@@ -70,30 +73,34 @@ public class StaticAudioTrackSource implements AudioSource {
     private void extractMediaData(AssetFileDescriptor afd) {
         MediaExtractor mex = new MediaExtractor();
         try {
-            mex.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());// the adresss location of the sound on sdcard.
+            mex.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());// the adresss location of the sound on sdcard.
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            Log.e("XapPTest",Log.getStackTraceString(e));
+            Log.e("AudioTest", Log.getStackTraceString(e));
         }
 
         MediaFormat mf = mex.getTrackFormat(0);
         sampleRate = mf.getInteger(MediaFormat.KEY_SAMPLE_RATE);
-        channelCount = mf.getInteger(MediaFormat.KEY_CHANNEL_COUNT);
-        // check your constants for this stuff
         duration = mf.getLong(MediaFormat.KEY_DURATION);
+        channelCount = mf.getInteger(MediaFormat.KEY_CHANNEL_COUNT);
+        // getting this wrong can result in interesting audio characterists, like playing at half or double speed.
+        if (channelCount == 1) {
+            channelConfig = AudioFormat.CHANNEL_CONFIGURATION_MONO;
+        } else if (channelCount == 2) {
+            channelConfig = AudioFormat.CHANNEL_CONFIGURATION_STEREO;
+        } else {
+            throw new RuntimeException("Loading Wav File with unsopported number of channels, num: "+channelCount);
+        }
 
-//        minBufferSize = AudioTrack.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_CONFIGURATION_MONO,
-//                AudioFormat.ENCODING_PCM_16BIT);
-
-        Log.e("XappTest", "bitrate: "+bitRate+ " sample rate: "+sampleRate+" channelCount: "+channelCount+ " duration: "+duration);
+        Log.e("AudioTest","sample rate: " + sampleRate + " channelCount: " + channelCount + " duration: " + duration);
     }
 
 
     private void prepareStaticAudioTrack(InputStream inputStream) {
         try {
 
-            mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+            mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, channelConfig,
                     AudioFormat.ENCODING_PCM_16BIT, WavInfo.dataLength, AudioTrack.MODE_STATIC);
             // in static mode we call wrtie first, then we can play later.
             int i = 0;
@@ -110,10 +117,15 @@ public class StaticAudioTrackSource implements AudioSource {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        setNotificationMakerPosition(100);
     }
 
     @Override
     public void playAudio() {
+        if(mAudioTrack.getPlaybackHeadPosition()!=0) {
+            mAudioTrack.stop();
+            mAudioTrack.setPlaybackHeadPosition(0);
+        }
         mAudioTrack.play();
     }
 
@@ -133,7 +145,8 @@ public class StaticAudioTrackSource implements AudioSource {
     }
 
     public void setNotificationMakerPosition(int markerInFrames) {
-        mAudioTrack.setNotificationMarkerPosition(markerInFrames);
+       int m =  mAudioTrack.setNotificationMarkerPosition(markerInFrames);
+        Log.e("AudioTest","set marker to: "+markerInFrames+" result: "+m);
     }
 
 }
