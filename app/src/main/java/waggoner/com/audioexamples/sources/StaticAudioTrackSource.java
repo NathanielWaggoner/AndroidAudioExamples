@@ -24,7 +24,7 @@ import waggoner.com.audioexamples.core.WavInfo;
  * <p/>
  *
  * AudioTracks have a less favorible processor scheduling priority than SoundPool so you should prefer sound pool typically.
- * 
+ *
  * Created by nathanielwaggoner on 8/7/15.
  */
 public class StaticAudioTrackSource implements AudioSource {
@@ -93,7 +93,7 @@ public class StaticAudioTrackSource implements AudioSource {
             throw new RuntimeException("Loading Wav File with unsopported number of channels, num: "+channelCount);
         }
 
-        Log.e("AudioTest","sample rate: " + sampleRate + " channelCount: " + channelCount + " duration: " + duration);
+        Log.e("AudioTest", "sample rate: " + sampleRate + " channelCount: " + channelCount + " duration: " + duration);
     }
 
 
@@ -117,7 +117,6 @@ public class StaticAudioTrackSource implements AudioSource {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        setNotificationMakerPosition(100);
     }
 
     @Override
@@ -140,6 +139,9 @@ public class StaticAudioTrackSource implements AudioSource {
         mAudioTrack.release();
     }
 
+    // this is never called as far as I can tell:
+    //https://code.google.com/p/android/issues/detail?id=2563#makechanges
+    // currently assigned, but unfixed as of Nov 30, 2014
     public void setPlaybackPositionUpdateListener(AudioTrack.OnPlaybackPositionUpdateListener listener) {
         mAudioTrack.setPlaybackPositionUpdateListener(listener);
     }
