@@ -9,12 +9,19 @@ This will include Java and C versions.
 Targets:
 
 SoundPool
+
 MediaPLayer
+
 MediaRecorder
+
 AudioTrack
+
 AudioEffect
+
 SuperPowered - obligatory liscense note:  AndroidAudioExamples has been Superpowered!
+
 OpenSLES
+
 PD - maybe....
 
 App Description:
