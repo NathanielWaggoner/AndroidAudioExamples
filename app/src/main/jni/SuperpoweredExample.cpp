@@ -157,18 +157,18 @@ bool SuperpoweredExample::process(short int *output, unsigned int numberOfSample
 }
 
 extern "C" {
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_SuperpoweredExample(JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray offsetAndLength);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onPlayPause(JNIEnv *javaEnvironment, jobject self, jboolean play);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onCrossfader(JNIEnv *javaEnvironment, jobject self, jint value);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxSelect(JNIEnv *javaEnvironment, jobject self, jint value);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxOff(JNIEnv *javaEnvironment, jobject self);
-	JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxValue(JNIEnv *javaEnvironment, jobject self, jint value);
+	JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_SuperpoweredExample(JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray offsetAndLength);
+	JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onPlayPause(JNIEnv *javaEnvironment, jobject self, jboolean play);
+	JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onCrossfader(JNIEnv *javaEnvironment, jobject self, jint value);
+	JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onFxSelect(JNIEnv *javaEnvironment, jobject self, jint value);
+	JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onFxOff(JNIEnv *javaEnvironment, jobject self);
+	JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onFxValue(JNIEnv *javaEnvironment, jobject self, jint value);
 }
 
 static SuperpoweredExample *example = NULL;
 
 // Android is not passing more than 2 custom parameters, so we had to pack file offsets and lengths into an array.
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_SuperpoweredExample(JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray params) {
+JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_SuperpoweredExample(JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray params) {
 	// Convert the input jlong array to a regular int array.
     jlong *longParams = javaEnvironment->GetLongArrayElements(params, JNI_FALSE);
     int arr[6];
@@ -181,22 +181,22 @@ JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_SuperpoweredExamp
 
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onPlayPause(JNIEnv *javaEnvironment, jobject self, jboolean play) {
+JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onPlayPause(JNIEnv *javaEnvironment, jobject self, jboolean play) {
 	example->onPlayPause(play);
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onCrossfader(JNIEnv *javaEnvironment, jobject self, jint value) {
+JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onCrossfader(JNIEnv *javaEnvironment, jobject self, jint value) {
 	example->onCrossfader(value);
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxSelect(JNIEnv *javaEnvironment, jobject self, jint value) {
+JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onFxSelect(JNIEnv *javaEnvironment, jobject self, jint value) {
 	example->onFxSelect(value);
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxOff(JNIEnv *javaEnvironment, jobject self) {
+JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onFxOff(JNIEnv *javaEnvironment, jobject self) {
 	example->onFxOff();
 }
 
-JNIEXPORT void Java_com_superpowered_crossexample_MainActivity_onFxValue(JNIEnv *javaEnvironment, jobject self, jint value) {
+JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onFxValue(JNIEnv *javaEnvironment, jobject self, jint value) {
 	example->onFxValue(value);
 }
