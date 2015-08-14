@@ -13,13 +13,13 @@ MediaPLayer
 MediaRecorder
 AudioTrack
 AudioEffect
-SuperPowered
+SuperPowered - obligatory liscense note:  AndroidAudioExamples has been Superpowered!
 OpenSLES
 PD - maybe....
 
 App Description:
 
-I'll be writing a stupid simple mixer with 2-4 channels, with some basic effects plug in capabiltiies. You shouldn't look at this as a model of efficiency or perfect audio, but instead as an opprotunity to use various pathaways simultatneously and experieince their different performance characterists.
+I'll be writing a stupid simple mixer with 2-4 channels, with some basic effects plug in capabiltiies. You shouldn't look at this as a model of efficiency or mixing audio, but instead as an opprotunity to use various pathaways simultatneously and experieince their different performance characterists.
 
 The basic dumb first example is going to be a "drum kit" model, but hopefully I can throw together a flexible enough architecture that I can put a sequencer in there and some other fun examples.
 
