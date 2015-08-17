@@ -9,11 +9,11 @@ import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import com.waggoner.audioexamples.core.AudioSource;
 import com.waggoner.audioexamples.core.WavInfo;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Now things get complicated.
@@ -65,7 +65,7 @@ public class StaticAudioTrackSource implements AudioSource {
             WavInfo.parseWave(context.getResources().openRawResource(resource));
             afd.close();
         } catch (IOException e) {
-            Log.e("AudioTest", Log.getStackTraceString(e));
+            Log.e("XappTest", Log.getStackTraceString(e));
         }
 
     }
@@ -77,7 +77,7 @@ public class StaticAudioTrackSource implements AudioSource {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            Log.e("AudioTest", Log.getStackTraceString(e));
+            Log.e("XappTest", Log.getStackTraceString(e));
         }
 
         MediaFormat mf = mex.getTrackFormat(0);
@@ -93,7 +93,7 @@ public class StaticAudioTrackSource implements AudioSource {
             throw new RuntimeException("Loading Wav File with unsopported number of channels, num: "+channelCount);
         }
 
-        Log.e("AudioTest", "sample rate: " + sampleRate + " channelCount: " + channelCount + " duration: " + duration);
+        Log.e("XappTest", "sample rate: " + sampleRate + " channelCount: " + channelCount + " duration: " + duration);
     }
 
 
@@ -147,7 +147,7 @@ public class StaticAudioTrackSource implements AudioSource {
 
     public void setNotificationMakerPosition(int markerInFrames) {
        int m =  mAudioTrack.setNotificationMarkerPosition(markerInFrames);
-        Log.e("AudioTest","set marker to: "+markerInFrames+" result: "+m);
+        Log.e("XappTest","set marker to: "+markerInFrames+" result: "+m);
     }
 
 }

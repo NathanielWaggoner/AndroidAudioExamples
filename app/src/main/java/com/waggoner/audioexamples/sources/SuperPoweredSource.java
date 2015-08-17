@@ -7,6 +7,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.waggoner.audioexamples.core.AudioSource;
+import com.waggoner.audioexamples.core.WavInfo;
 
 import java.io.IOException;
 
@@ -26,8 +27,13 @@ public class SuperPoweredSource implements AudioSource {
         }
         if (samplerateString == null) samplerateString = "44100";
         if (buffersizeString == null) buffersizeString = "512";
-
+        try {
+            WavInfo.parseWave(ctx.getResources().openRawResourceFd(resource).createInputStream());
+        } catch (Exception e) {
+            Log.e("XappTest",Log.getStackTraceString(e));
+        }
         AssetFileDescriptor fd0 = ctx.getResources().openRawResourceFd(resource);
+        Log.e("XappTest","FD startOffset: "+fd0.getStartOffset()+" and length: "+fd0.getLength());
         long[] params = {
                 fd0.getStartOffset(),
                 fd0.getLength(),

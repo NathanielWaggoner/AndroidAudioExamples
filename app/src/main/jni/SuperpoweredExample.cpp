@@ -41,7 +41,7 @@ SuperpoweredExample::SuperpoweredExample(const char *path, int *params) : active
     unsigned int samplerate = params[2], buffersize = params[3];
     stereoBuffer = (float *) memalign(16, (buffersize + 16) * sizeof(float) * 2 );
     playerA = new SuperpoweredAdvancedAudioPlayer(&playerA, playerEventCallbackA, samplerate, 0);
-    playerA->open(path, params[0], params[1]-params[1]/5);
+    playerA->open(path, params[0], params[1]);
     audioSystem = new SuperpoweredAndroidAudioIO(samplerate, buffersize, false, true,
                                                  audioProcessing, this, 0);
 }
