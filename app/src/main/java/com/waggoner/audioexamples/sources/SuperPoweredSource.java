@@ -25,18 +25,15 @@ public class SuperPoweredSource implements AudioSource {
         if (samplerateString == null) samplerateString = "44100";
         if (buffersizeString == null) buffersizeString = "512";
 
-        AssetFileDescriptor fd0 = ctx.getResources().openRawResourceFd(resource), fd1 = ctx.getResources().openRawResourceFd(resource);
+        AssetFileDescriptor fd0 = ctx.getResources().openRawResourceFd(resource);
         long[] params = {
                 fd0.getStartOffset(),
                 fd0.getLength(),
-                fd1.getStartOffset(),
-                fd1.getLength(),
                 Integer.parseInt(samplerateString),
                 Integer.parseInt(buffersizeString)
         };
         try {
             fd0.getParcelFileDescriptor().close();
-            fd1.getParcelFileDescriptor().close();
         } catch (IOException e) {
             android.util.Log.d("", "Close error.");
         }
@@ -68,9 +65,5 @@ public class SuperPoweredSource implements AudioSource {
     }
     private native void SuperpoweredExample(String apkPath, long[] offsetAndLength);
     private native void onPlayPause(boolean play);
-    private native void onCrossfader(int value);
-    private native void onFxSelect(int value);
-    private native void onFxOff();
-    private native void onFxValue(int value);
 
 }
