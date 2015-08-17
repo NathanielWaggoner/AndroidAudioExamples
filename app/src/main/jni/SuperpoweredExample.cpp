@@ -9,10 +9,13 @@ static void playerEventCallbackA(void *clientData, SuperpoweredAdvancedAudioPlay
                                  void *value) {
     if (event == SuperpoweredAdvancedAudioPlayerEvent_LoadSuccess) {
         SuperpoweredAdvancedAudioPlayer *playerA = *((SuperpoweredAdvancedAudioPlayer **) clientData);
-    }; if(event == SuperpoweredAdvancedAudioPlayerEvent_EOF) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "EOF %f", value);
         playerA->pause(0,0);
         playerA->seek(0);
+    }; if(event == SuperpoweredAdvancedAudioPlayerEvent_EOF) {
+        playerA->pause(0,0);
+        playerA->seek(0);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "EOF %f", value);
+
     } if(event == SuperpoweredAdvancedAudioPlayerEvent_DurationChanged) {
         __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "DurationChanged %f", value);
     } if(event == SuperpoweredAdvancedAudioPlayerEvent_JogParameter) {
@@ -38,7 +41,7 @@ SuperpoweredExample::SuperpoweredExample(const char *path, int *params) : active
     unsigned int samplerate = params[2], buffersize = params[3];
     stereoBuffer = (float *) memalign(16, (buffersize + 16) * sizeof(float) * 2 );
     playerA = new SuperpoweredAdvancedAudioPlayer(&playerA, playerEventCallbackA, samplerate, 0);
-    playerA->open(path, params[0], params[1]);
+    playerA->open(path, params[0], params[1]-params[1]/5);
     audioSystem = new SuperpoweredAndroidAudioIO(samplerate, buffersize, false, true,
                                                  audioProcessing, this, 0);
 }

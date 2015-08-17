@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.os.Build;
+import android.util.Log;
 
+import com.waggoner.audioexamples.R;
 import com.waggoner.audioexamples.core.AudioSource;
 
 import java.io.IOException;
@@ -21,11 +23,12 @@ public class SuperPoweredSource implements AudioSource {
             AudioManager audioManager = (AudioManager) ctx.getSystemService(Context.AUDIO_SERVICE);
             samplerateString = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
             buffersizeString = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
+            Log.e("XappTest","SysSampleRate: "+samplerateString+" SysBuffSize: "+buffersizeString);
         }
         if (samplerateString == null) samplerateString = "44100";
         if (buffersizeString == null) buffersizeString = "512";
 
-        AssetFileDescriptor fd0 = ctx.getResources().openRawResourceFd(resource);
+        AssetFileDescriptor fd0 = ctx.getResources().openRawResourceFd(R.raw.lycka);
         long[] params = {
                 fd0.getStartOffset(),
                 fd0.getLength(),

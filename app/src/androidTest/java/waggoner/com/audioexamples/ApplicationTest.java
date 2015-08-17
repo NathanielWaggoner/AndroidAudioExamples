@@ -1,4 +1,4 @@
-package waggoner.com.audioexamples;
+package com.waggoner.audioexamples;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
