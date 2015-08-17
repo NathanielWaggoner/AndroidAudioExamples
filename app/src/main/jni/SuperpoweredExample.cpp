@@ -9,8 +9,6 @@ static void playerEventCallbackA(void *clientData, SuperpoweredAdvancedAudioPlay
                                  void *value) {
     if (event == SuperpoweredAdvancedAudioPlayerEvent_LoadSuccess) {
         SuperpoweredAdvancedAudioPlayer *playerA = *((SuperpoweredAdvancedAudioPlayer **) clientData);
-        playerA
-//        playerA->setPosition(playerA->firstBeatMs, true, false);
     }; if(event == SuperpoweredAdvancedAudioPlayerEvent_EOF) {
         __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "EOF %f", value);
         playerA->pause(0,0);
