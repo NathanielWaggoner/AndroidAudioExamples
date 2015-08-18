@@ -1,4 +1,4 @@
-package com.waggoner.audioexamples.sources;
+package com.waggoner.audioexamples.outputs;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -9,12 +9,12 @@ import android.util.Log;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
-import com.waggoner.audioexamples.core.AudioSource;
+import com.waggoner.audioexamples.core.OuputSource;
 
 /**
  * Created by nathanielwaggoner on 8/6/15.
  */
-public class MediaPlayerSource implements AudioSource {
+public class MediaPlayerSource implements OuputSource {
 
     public static String TAG = MediaPlayerSource.class.getName();
     MediaPlayer mySource;

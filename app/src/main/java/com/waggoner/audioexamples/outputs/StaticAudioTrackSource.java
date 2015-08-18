@@ -1,4 +1,4 @@
-package com.waggoner.audioexamples.sources;
+package com.waggoner.audioexamples.outputs;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -9,8 +9,8 @@ import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.util.Log;
 
-import com.waggoner.audioexamples.core.AudioSource;
-import com.waggoner.audioexamples.core.WavInfo;
+import com.waggoner.audioexamples.core.OuputSource;
+import com.waggoner.audioexamples.util.WavInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ import java.io.InputStream;
  *
  * Created by nathanielwaggoner on 8/7/15.
  */
-public class StaticAudioTrackSource implements AudioSource {
+public class StaticAudioTrackSource implements OuputSource {
 
     // dont use MP3's here, thats the big foot note.
 

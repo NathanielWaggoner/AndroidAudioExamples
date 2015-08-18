@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.waggoner.audioexamples.R;
 import com.waggoner.audioexamples.core.Channel;
-import com.waggoner.audioexamples.sources.MediaPlayerSource;
+import com.waggoner.audioexamples.outputs.MediaPlayerSource;
 import com.waggoner.audioexamples.core.Mixer;
 
 /**

@@ -11,10 +11,10 @@ import android.widget.LinearLayout;
 
 import com.waggoner.audioexamples.drumKit.Drum;
 import com.waggoner.audioexamples.drumKit.DrumMixer;
-import com.waggoner.audioexamples.sources.MediaPlayerSource;
-import com.waggoner.audioexamples.sources.SoundPoolSource;
-import com.waggoner.audioexamples.sources.StaticAudioTrackSource;
-import com.waggoner.audioexamples.sources.SuperPoweredSource;
+import com.waggoner.audioexamples.outputs.MediaPlayerSource;
+import com.waggoner.audioexamples.outputs.SoundPoolSource;
+import com.waggoner.audioexamples.outputs.StaticAudioTrackSource;
+import com.waggoner.audioexamples.outputs.SuperPoweredSource;
 
 public class MainActivity extends AppCompatActivity {
 
