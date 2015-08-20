@@ -14,14 +14,14 @@ static void playerEventCallbackA(void *clientData, SuperpoweredAdvancedAudioPlay
     }; if(event == SuperpoweredAdvancedAudioPlayerEvent_EOF) {
         playerA->pause(0,0);
         playerA->seek(0);
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "EOF %f", value);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "EOF ");
 
     } if(event == SuperpoweredAdvancedAudioPlayerEvent_DurationChanged) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "DurationChanged %f", value);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "DurationChanged ");
     } if(event == SuperpoweredAdvancedAudioPlayerEvent_JogParameter) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "JogParameter %f", value);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "JogParameter ");
     } if( event == SuperpoweredAdvancedAudioPlayerEvent_LoadSuccess) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "loadSuccess %f", value);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "loadSuccess ");
 
     }
 

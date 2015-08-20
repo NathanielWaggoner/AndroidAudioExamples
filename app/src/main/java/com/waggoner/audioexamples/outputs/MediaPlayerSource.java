@@ -6,10 +6,10 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 
+import com.waggoner.audioexamples.core.OuputSource;
+
 import java.io.FileDescriptor;
 import java.io.IOException;
-
-import com.waggoner.audioexamples.core.OuputSource;
 
 /**
  * Created by nathanielwaggoner on 8/6/15.
@@ -95,6 +95,10 @@ public class MediaPlayerSource implements OuputSource {
     }
     @Override
     public void playAudio() {
+        if(mySource.isPlaying()) {
+            mySource.pause();
+        }
+        mySource.seekTo(0);
         mySource.start();
 
     }

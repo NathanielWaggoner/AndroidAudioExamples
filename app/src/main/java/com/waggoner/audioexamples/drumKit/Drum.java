@@ -17,6 +17,12 @@ public class Drum implements Channel {
     OuputSource mAudioSource;
     MediaPlayer.OnCompletionListener mOnCompletionListener;
     AudioTrack.OnPlaybackPositionUpdateListener mOnPlaybackPositioNupdateListener;
+
+    /**
+     * TODO:
+     *
+     * Seek to functionality when play is pressed (seek to beginning)
+     */
     @Override
     public void play() {
         mAudioSource.playAudio();
