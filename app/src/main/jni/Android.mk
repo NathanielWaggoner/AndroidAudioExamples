@@ -1,5 +1,5 @@
 LOCAL_PATH := $(call my-dir)
-SUPERPOWERED_PATH := /Users/nathanielwaggoner/programming_utils/tools/Superpowered/Superpowered
+SUPERPOWERED_PATH := ../../../../superpowered/Superpowered
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := Superpowered
