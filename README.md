@@ -32,5 +32,11 @@ The basic dumb first example is going to be a "drum kit" model, but hopefully I 
 
 You'll be able to specify the media path for each channel of Audio.
 
+To Build:
 
+You'll need a version of Android Studio with NDK support.  Otherwise it should be a simple press play build process.
+
+What to look at?
+
+If you're just trying to figure out an I/O issue, have a look at either the inputs or outputs in src/main/java/com.waggoner.audioexamples/
 
