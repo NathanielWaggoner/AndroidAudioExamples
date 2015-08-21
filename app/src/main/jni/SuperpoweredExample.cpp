@@ -14,14 +14,14 @@ static void playerEventCallbackA(void *clientData, SuperpoweredAdvancedAudioPlay
     }; if(event == SuperpoweredAdvancedAudioPlayerEvent_EOF) {
         playerA->pause(0,0);
         playerA->seek(0);
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "EOF %f", value);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "EOF ");
 
     } if(event == SuperpoweredAdvancedAudioPlayerEvent_DurationChanged) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "DurationChanged %f", value);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "DurationChanged ");
     } if(event == SuperpoweredAdvancedAudioPlayerEvent_JogParameter) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "JogParameter %f", value);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "JogParameter ");
     } if( event == SuperpoweredAdvancedAudioPlayerEvent_LoadSuccess) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "loadSuccess %f", value);
+        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "loadSuccess ");
 
     }
 
@@ -73,14 +73,14 @@ bool SuperpoweredExample::process(short int *output, unsigned int numberOfSample
 }
 
 extern "C" {
-JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_SuperpoweredExample(
+JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_SuperpoweredExample(
         JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray offsetAndLength);
-JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onPlayPause(
+JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_onPlayPause(
         JNIEnv *javaEnvironment, jobject self, jboolean play);
 }
 static SuperpoweredExample *example = NULL;
 // Android is not passing more than 2 custom parameters, so we had to pack file offsets and lengths into an array.
-JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_SuperpoweredExample(
+JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_SuperpoweredExample(
         JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray params) {
     // Convert the input jlong array to a regular int array.
     jlong *longParams = javaEnvironment->GetLongArrayElements(params, JNI_FALSE);
@@ -94,7 +94,7 @@ JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_Superp
 
 }
 
-JNIEXPORT void Java_com_waggoner_audioexamples_sources_SuperPoweredSource_onPlayPause(
+JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_onPlayPause(
         JNIEnv *javaEnvironment, jobject self, jboolean play) {
     example->onPlayPause(play);
 }

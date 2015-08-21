@@ -1,4 +1,4 @@
-package com.waggoner.audioexamples.core;
+package com.waggoner.audioexamples.util;
 
 import android.util.Log;
 

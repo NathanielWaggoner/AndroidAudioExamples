@@ -1,22 +1,28 @@
-package com.waggoner.audioexamples.drumKit;
+package com.waggoner.audioexamples.basic;
 
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-import com.waggoner.audioexamples.core.AudioSource;
+import com.waggoner.audioexamples.core.OuputSource;
 import com.waggoner.audioexamples.core.Channel;
 import com.waggoner.audioexamples.core.Effect;
-import com.waggoner.audioexamples.sources.MediaPlayerSource;
-import com.waggoner.audioexamples.sources.StaticAudioTrackSource;
+import com.waggoner.audioexamples.outputs.MediaPlayerSource;
+import com.waggoner.audioexamples.outputs.StaticAudioTrackSource;
 
 /**
  * Created by nathanielwaggoner on 8/6/15.
  */
 public class Drum implements Channel {
-    AudioSource mAudioSource;
+    OuputSource mAudioSource;
     MediaPlayer.OnCompletionListener mOnCompletionListener;
     AudioTrack.OnPlaybackPositionUpdateListener mOnPlaybackPositioNupdateListener;
+
+    /**
+     * TODO:
+     *
+     * Seek to functionality when play is pressed (seek to beginning)
+     */
     @Override
     public void play() {
         mAudioSource.playAudio();
@@ -24,12 +30,12 @@ public class Drum implements Channel {
 
     Effect mEffect;
 
-    public Drum(AudioSource source, Effect effect){
+    public Drum(OuputSource source, Effect effect){
         setAudioSource(source);
         setEffect(effect);
     };
     @Override
-    public void setAudioSource(AudioSource audioSource) {
+    public void setAudioSource(OuputSource audioSource) {
         mAudioSource = audioSource;
         if(mAudioSource instanceof MediaPlayerSource) {
             mOnCompletionListener = new MediaPlayerOnCompletionListener();
@@ -47,7 +53,7 @@ public class Drum implements Channel {
     }
 
     @Override
-    public AudioSource getAudioSource() {
+    public OuputSource getAudioSource() {
         return mAudioSource ;
     }
 

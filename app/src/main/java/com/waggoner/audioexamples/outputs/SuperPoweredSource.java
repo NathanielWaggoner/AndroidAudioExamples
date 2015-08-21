@@ -1,4 +1,4 @@
-package com.waggoner.audioexamples.sources;
+package com.waggoner.audioexamples.outputs;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -6,29 +6,29 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.util.Log;
 
-import com.waggoner.audioexamples.core.AudioSource;
-import com.waggoner.audioexamples.core.WavInfo;
+import com.waggoner.audioexamples.core.OuputSource;
 
 import java.io.IOException;
 
 /**
  * Created by nathanielwaggoner on 8/14/15.
  */
-public class SuperPoweredSource implements AudioSource {
+public class SuperPoweredSource implements OuputSource {
 
     boolean playing = false;
+
     public SuperPoweredSource(Context ctx, int resource) {
         String samplerateString = null, buffersizeString = null;
         if (Build.VERSION.SDK_INT >= 17) {
             AudioManager audioManager = (AudioManager) ctx.getSystemService(Context.AUDIO_SERVICE);
             samplerateString = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
             buffersizeString = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
-            Log.e("XappTest","SysSampleRate: "+samplerateString+" SysBuffSize: "+buffersizeString);
+            Log.e("XappTest", "SysSampleRate: " + samplerateString + " SysBuffSize: " + buffersizeString);
         }
         if (samplerateString == null) samplerateString = "44100";
         if (buffersizeString == null) buffersizeString = "512";
         AssetFileDescriptor fd0 = ctx.getResources().openRawResourceFd(resource);
-        Log.e("XappTest","FD startOffset: "+fd0.getStartOffset()+" and length: "+fd0.getLength());
+        Log.e("XappTest", "FD startOffset: " + fd0.getStartOffset() + " and length: " + fd0.getLength());
         long[] params = {
                 fd0.getStartOffset(),
                 fd0.getLength(),
@@ -66,7 +66,9 @@ public class SuperPoweredSource implements AudioSource {
         System.loadLibrary("SuperpoweredExample");
         // load relevant source library here.
     }
+
     private native void SuperpoweredExample(String apkPath, long[] offsetAndLength);
+
     private native void onPlayPause(boolean play);
 
 }
