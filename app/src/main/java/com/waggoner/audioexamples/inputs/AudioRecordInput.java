@@ -27,12 +27,17 @@ public class AudioRecordInput implements InputSource {
      *
      * I believe this may actuall be kinda of... falsish..
      */
-    public static final int SAMPLE_RATE = 44100;
+    private static final int INPUT_SOURCE = MediaRecorder.AudioSource.MIC;
+    public static final int SAMPLE_RATE = 16000;
+    private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
+    private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
+    static int BufferElements2Rec = 1024;
+    static int BytesPerElement = 2;
+    AudioRecord record;
+
+
     private LinkedBlockingQueue<short[]> audioPassBufferList;
 
-    AudioRecord record;
-    int BufferElements2Rec = 1024;
-    int BytesPerElement = 2;
     /**
      * We never want to do processing on the same thread that we do polling.  Device performance at this level is very, very unpredictable so
      * anything that blocks polling of the input stream is unacceptable.
@@ -58,7 +63,9 @@ public class AudioRecordInput implements InputSource {
 
     @Override
     public void playRecording() {
-
+        /**
+         * TODO:  This doesn't belong here...
+         */
     }
 
     /**
@@ -66,7 +73,7 @@ public class AudioRecordInput implements InputSource {
      * @param fileName
      */
     public AudioRecordInput(String fileName) {
-        new AudioRecordInput(OUTPUT_TYPE_FILE,new FileWriterCallback(fileName));
+        this(OUTPUT_TYPE_FILE, new FileWriterCallback(fileName));
     }
 
     /**
@@ -74,7 +81,7 @@ public class AudioRecordInput implements InputSource {
      * @param callback
      */
     public AudioRecordInput(InputBufferCallback callback) {
-        new AudioRecordInput(OUTPUT_TYPE_CALLBACK,callback);
+        this(OUTPUT_TYPE_CALLBACK, callback);
     }
 
     /**
@@ -83,7 +90,7 @@ public class AudioRecordInput implements InputSource {
      * @param callback
      */
     public AudioRecordInput(int outputType, InputBufferCallback callback) {
-        new AudioRecordInput(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, BufferElements2Rec * BytesPerElement, outputType, callback);
+        this(INPUT_SOURCE, SAMPLE_RATE, RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement, outputType, callback);
     }
 
     /**
@@ -100,6 +107,7 @@ public class AudioRecordInput implements InputSource {
                             int bufferSizeInBytes,int outputType, InputBufferCallback callback) {
         mOutputType = outputType;
         mInputBufferCallback = callback;
+        mInputBufferCallback.prepare();
         isRecording = new AtomicBoolean(false);
         audioPassBufferList = new LinkedBlockingQueue<short[]>();
         record = new AudioRecord(audioSource, sampleRateInHz, channelConfig, audioFormat,bufferSizeInBytes);

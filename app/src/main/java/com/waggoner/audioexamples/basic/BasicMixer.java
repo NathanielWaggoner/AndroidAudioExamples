@@ -39,7 +39,7 @@ public class BasicMixer implements Mixer {
         setChannel(1, new Drum(new SoundPoolSource(context, R.raw.claves), null));
         setChannel(2, new Drum(new StaticAudioTrackSource(context, R.raw.claves), null));
         setChannel(3, new Drum(new SuperPoweredSource(context, R.raw.claves), null));
-        inputs[0] = new AudioRecordInput(FileUtil.generateFileName());
+        inputs[0] = new AudioRecordInput(FileUtil.generateRecordingsFileName(context));
     }
 
     @Override

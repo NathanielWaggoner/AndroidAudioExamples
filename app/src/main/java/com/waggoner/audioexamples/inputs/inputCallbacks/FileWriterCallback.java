@@ -21,15 +21,10 @@ public class FileWriterCallback implements InputBufferCallback {
         mFileName = fileName;
     }
 
-    public String generateFileName() {
-        return "";
-    }
 
     @Override
     public void prepare() {
-        if (mFileName == null) {
-            mFileName = generateFileName();
-        }
+        Log.e("XapPTest","Calling prepare:  filename: "+mFileName);
         try {
             fos = new FileOutputStream(mFileName);
         } catch (FileNotFoundException fnfe) {
