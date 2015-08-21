@@ -16,4 +16,14 @@ public class AudioUtil {
         }
         return bytes;
     }
+
+
+    public static short[] bytesToShorts(byte[] sData) {
+        int byteArrSize = sData.length;
+        short[] shorts = new short[byteArrSize / 2];
+        for (int i = 0; i < byteArrSize/2; i++) {
+            shorts[i] = (short)(((sData[i*2+1]&0xFF)<<8) | (sData[i*2]&0xFF));
+        }
+        return shorts;
+    }
 }

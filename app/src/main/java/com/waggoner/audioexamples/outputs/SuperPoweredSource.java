@@ -6,14 +6,14 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.util.Log;
 
-import com.waggoner.audioexamples.core.OuputSource;
+import com.waggoner.audioexamples.core.OutputSource;
 
 import java.io.IOException;
 
 /**
  * Created by nathanielwaggoner on 8/14/15.
  */
-public class SuperPoweredSource implements OuputSource {
+public class SuperPoweredSource implements OutputSource {
 
     boolean playing = false;
 

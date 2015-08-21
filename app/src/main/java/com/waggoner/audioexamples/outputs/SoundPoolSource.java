@@ -4,14 +4,14 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 
-import com.waggoner.audioexamples.core.OuputSource;
+import com.waggoner.audioexamples.core.OutputSource;
 
 /**
  *
  * Sound pools are easier than audio tracks, but faster than MediaPlayers.  We like them!
  * Created by nathanielwaggoner on 8/7/15.
  */
-public class SoundPoolSource implements OuputSource {
+public class SoundPoolSource implements OutputSource {
 
     SoundPool sp;
     int soundId;

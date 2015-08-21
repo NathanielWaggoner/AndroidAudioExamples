@@ -107,7 +107,6 @@ public class AudioRecordInput implements InputSource {
                             int bufferSizeInBytes,int outputType, InputBufferCallback callback) {
         mOutputType = outputType;
         mInputBufferCallback = callback;
-        mInputBufferCallback.prepare();
         isRecording = new AtomicBoolean(false);
         audioPassBufferList = new LinkedBlockingQueue<short[]>();
         record = new AudioRecord(audioSource, sampleRateInHz, channelConfig, audioFormat,bufferSizeInBytes);
@@ -126,6 +125,7 @@ public class AudioRecordInput implements InputSource {
     }
     @Override
     public boolean startInput() {
+        mInputBufferCallback.prepare();
         if(mInputBufferCallback == null) {
             throw new RuntimeException("No InputBufferCallback set for audio handling");
         }

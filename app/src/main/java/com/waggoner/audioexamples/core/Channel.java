@@ -5,8 +5,8 @@ package com.waggoner.audioexamples.core;
  */
 public interface Channel {
 
-    void setAudioSource(OuputSource audioSource);
-    OuputSource getAudioSource();
+    void setAudioSource(OutputSource audioSource);
+    OutputSource getAudioSource();
     void processBuffer(short[] buffer);
     void setEffect(Effect effect);
     Effect getEffect();

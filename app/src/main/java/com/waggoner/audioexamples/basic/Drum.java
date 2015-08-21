@@ -4,7 +4,7 @@ import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-import com.waggoner.audioexamples.core.OuputSource;
+import com.waggoner.audioexamples.core.OutputSource;
 import com.waggoner.audioexamples.core.Channel;
 import com.waggoner.audioexamples.core.Effect;
 import com.waggoner.audioexamples.outputs.MediaPlayerSource;
@@ -14,7 +14,7 @@ import com.waggoner.audioexamples.outputs.StaticAudioTrackSource;
  * Created by nathanielwaggoner on 8/6/15.
  */
 public class Drum implements Channel {
-    OuputSource mAudioSource;
+    public OutputSource mAudioSource;
     MediaPlayer.OnCompletionListener mOnCompletionListener;
     AudioTrack.OnPlaybackPositionUpdateListener mOnPlaybackPositioNupdateListener;
 
@@ -30,12 +30,12 @@ public class Drum implements Channel {
 
     Effect mEffect;
 
-    public Drum(OuputSource source, Effect effect){
+    public Drum(OutputSource source, Effect effect){
         setAudioSource(source);
         setEffect(effect);
     };
     @Override
-    public void setAudioSource(OuputSource audioSource) {
+    public void setAudioSource(OutputSource audioSource) {
         mAudioSource = audioSource;
         if(mAudioSource instanceof MediaPlayerSource) {
             mOnCompletionListener = new MediaPlayerOnCompletionListener();
@@ -53,7 +53,7 @@ public class Drum implements Channel {
     }
 
     @Override
-    public OuputSource getAudioSource() {
+    public OutputSource getAudioSource() {
         return mAudioSource ;
     }
 

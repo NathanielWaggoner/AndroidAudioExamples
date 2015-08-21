@@ -7,6 +7,7 @@ import com.waggoner.audioexamples.core.Channel;
 import com.waggoner.audioexamples.core.InputSource;
 import com.waggoner.audioexamples.core.Mixer;
 import com.waggoner.audioexamples.inputs.AudioRecordInput;
+import com.waggoner.audioexamples.outputs.AudioTrackSource;
 import com.waggoner.audioexamples.outputs.MediaPlayerSource;
 import com.waggoner.audioexamples.outputs.SoundPoolSource;
 import com.waggoner.audioexamples.outputs.StaticAudioTrackSource;
@@ -39,6 +40,9 @@ public class BasicMixer implements Mixer {
         setChannel(1, new Drum(new SoundPoolSource(context, R.raw.claves), null));
         setChannel(2, new Drum(new StaticAudioTrackSource(context, R.raw.claves), null));
         setChannel(3, new Drum(new SuperPoweredSource(context, R.raw.claves), null));
+        AudioTrackSource src = new AudioTrackSource();
+        src.setPlaybackFile(BasicUi.getFileToPlay(context));
+        setChannel(4, new Drum(src,null));
         inputs[0] = new AudioRecordInput(FileUtil.generateRecordingsFileName(context));
     }
 

@@ -9,7 +9,7 @@ import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.util.Log;
 
-import com.waggoner.audioexamples.core.OuputSource;
+import com.waggoner.audioexamples.core.OutputSource;
 import com.waggoner.audioexamples.util.WavInfo;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import java.io.InputStream;
  *
  * Created by nathanielwaggoner on 8/7/15.
  */
-public class StaticAudioTrackSource implements OuputSource {
+public class StaticAudioTrackSource implements OutputSource {
 
     // dont use MP3's here, thats the big foot note.
 

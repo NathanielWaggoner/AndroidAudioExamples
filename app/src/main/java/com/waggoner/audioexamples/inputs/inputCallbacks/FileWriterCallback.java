@@ -28,6 +28,7 @@ public class FileWriterCallback implements InputBufferCallback {
         try {
             fos = new FileOutputStream(mFileName);
         } catch (FileNotFoundException fnfe) {
+            Log.e("Xapptest",Log.getStackTraceString(fnfe));
             Log.e(TAG, "File Not Found Exception in FileWriterCallback prepare()");
         }
     }
@@ -40,7 +41,7 @@ public class FileWriterCallback implements InputBufferCallback {
         }
         try {
             byte bData[] = AudioUtil.short2byte(buffer);
-            fos.write(bData, 0, bData.length);
+            fos.write(bData);
         } catch (IOException e) {
             Log.e(TAG, "IOException in FileWriterCallback handleBuffer()");
         }

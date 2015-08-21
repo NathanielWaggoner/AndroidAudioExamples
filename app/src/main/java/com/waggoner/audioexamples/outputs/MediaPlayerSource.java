@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 
-import com.waggoner.audioexamples.core.OuputSource;
+import com.waggoner.audioexamples.core.OutputSource;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by nathanielwaggoner on 8/6/15.
  */
-public class MediaPlayerSource implements OuputSource {
+public class MediaPlayerSource implements OutputSource {
 
     public static String TAG = MediaPlayerSource.class.getName();
     MediaPlayer mySource;
