@@ -1,4 +1,4 @@
-package com.waggoner.audioexamples.drumKit;
+package com.waggoner.audioexamples.basic;
 
 import android.media.AudioTrack;
 import android.media.MediaPlayer;

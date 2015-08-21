@@ -16,4 +16,8 @@ public interface InputSource {
      * @return
      */
     boolean stopInput();
+
+    boolean isPlayingRecording();
+
+    void playRecording();
 }

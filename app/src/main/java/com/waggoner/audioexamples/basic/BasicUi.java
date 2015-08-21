@@ -1,4 +1,4 @@
-package com.waggoner.audioexamples.drumKit;
+package com.waggoner.audioexamples.basic;
 
 import android.content.Context;
 import android.view.View;
@@ -6,17 +6,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.waggoner.audioexamples.ui.BasicUi;
+import com.waggoner.audioexamples.ui.SimpleUi;
 
 /**
  * Created by nathanielwaggoner on 8/20/15.
  */
-public class DrumKitUi implements BasicUi{
+public class BasicUi implements SimpleUi {
 
 
-    DrumMixer mixer;
+    boolean recording = false;
+    BasicMixer mixer;
     ViewGroup rootView;
-    public void setMixer(DrumMixer mixer){
+    public void setMixer(BasicMixer mixer){
          this.mixer = mixer;
     }
     @Override
@@ -62,11 +63,47 @@ public class DrumKitUi implements BasicUi{
             }
         });
 
+        final Button startStopRecord = new Button(ctx);
+        startStopRecord.setText("Start Recording");
+
+       final Button playRecord = new Button(ctx);
+        playRecord.setText("Play Record");
+
+
+        startStopRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recording = !recording;
+                if (recording) {
+                    mixer.inputs[0].startInput();
+                    startStopRecord.setText("Stop Recording");
+                } else {
+                    mixer.inputs[0].stopInput();
+                    startStopRecord.setText("Start Recording");
+                }
+            }
+        });
+
+        playRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!mixer.inputs[0].isPlayingRecording()) {
+                    mixer.inputs[0].playRecording();
+                    playRecord.setText("Recording Playing");
+                } else {
+                    mixer.inputs[0].stopInput();
+                    playRecord.setText("Recording Not Playing");
+                }
+            }
+        });
 
         layout.addView(btn);
         layout.addView(second);
         layout.addView(third);
         layout.addView(fourth);
+        layout.addView(startStopRecord);
+        layout.addView(playRecord);
 
         return layout;
 

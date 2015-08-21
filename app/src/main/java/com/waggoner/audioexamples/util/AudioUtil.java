@@ -4,6 +4,8 @@ package com.waggoner.audioexamples.util;
  * Created by nathanielwaggoner on 8/18/15.
  */
 public class AudioUtil {
+
+
     public static byte[] short2byte(short[] sData) {
         int shortArrsize = sData.length;
         byte[] bytes = new byte[shortArrsize * 2];

@@ -47,6 +47,20 @@ public class AudioRecordInput implements InputSource {
 
     InputBufferCallback mInputBufferCallback;
 
+    public static String generateDefaultFileName() {
+        return "stupid recording is stupid";
+    }
+
+    @Override
+    public boolean isPlayingRecording() {
+        return false;
+    }
+
+    @Override
+    public void playRecording() {
+
+    }
+
     /**
      * Helper constructor for a write to file behavior
      * @param fileName
