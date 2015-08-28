@@ -12,6 +12,7 @@ import android.util.Log;
 import com.waggoner.audioexamples.core.OutputSource;
 import com.waggoner.audioexamples.util.WavInfo;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -136,6 +137,11 @@ public class StaticAudioTrackSource implements OutputSource {
     @Override
     public void destroy() {
         mAudioTrack.release();
+    }
+
+    @Override
+    public void setPlaybackFile(File f) {
+
     }
 
     // this is never called as far as I can tell:

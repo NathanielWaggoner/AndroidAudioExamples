@@ -6,7 +6,6 @@ import android.media.AudioTrack;
 import android.util.Log;
 
 import com.waggoner.audioexamples.core.OutputSource;
-import com.waggoner.audioexamples.util.AudioUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,6 +50,7 @@ public class AudioTrackSource implements OutputSource {
 
     }
 
+    @Override
     public void setPlaybackFile(File file) {
         filePath = file.getAbsolutePath();
 
@@ -70,15 +70,7 @@ public class AudioTrackSource implements OutputSource {
 
     @Override
     public void playAudio() {
-        if(play.get()) {
-            play.set(false);
-            mAudioTrack.stop();
-            try {
-                playbackThread.join();
-            } catch(InterruptedException ie){
-                Log.e("XapPTest",Log.getStackTraceString(ie));
-            }
-        }
+        resetTrack();
         setUpFileStream();
         playbackThread = new Thread(new Runnable() {
             @Override
@@ -87,7 +79,6 @@ public class AudioTrackSource implements OutputSource {
                     byte[] bytes = new byte[BUFFER_SIZE * 2];
                     int n;
                     while (play.get()&& ((n = fis.read(bytes)) != -1)) {
-                        short[] deezShorts = AudioUtil.bytesToShorts(bytes);
                         mAudioTrack.write(bytes, 0, bytes.length);
                     }
                     play.set(false);
@@ -102,6 +93,17 @@ public class AudioTrackSource implements OutputSource {
         playbackThread.start();
     }
 
+    public void resetTrack() {
+        if(play.get()) {
+            play.set(false);
+            mAudioTrack.stop();
+            try {
+                playbackThread.join();
+            } catch(InterruptedException ie){
+                Log.e("XapPTest",Log.getStackTraceString(ie));
+            }
+        }
+    }
     @Override
     public void stopAudio() {
 

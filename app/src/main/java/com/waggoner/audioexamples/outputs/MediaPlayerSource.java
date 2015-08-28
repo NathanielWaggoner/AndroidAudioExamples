@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.waggoner.audioexamples.core.OutputSource;
 
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ public class MediaPlayerSource implements OutputSource {
 
     public static String TAG = MediaPlayerSource.class.getName();
     MediaPlayer mySource;
+
     /**
      * TODO:
      * or setDataSource(String), or setDataSource(FileDescriptor, long, long)
@@ -31,6 +33,28 @@ public class MediaPlayerSource implements OutputSource {
     public MediaPlayerSource(Context context, int raw_sound_file) {
         // we don't prepare here, create handles that
         mySource= MediaPlayer.create(context, raw_sound_file);
+    }
+
+    @Override
+    public void setPlaybackFile(File f) {
+        if(mySource!=null) {
+            stopAudio();
+            destroy();
+            mySource = new MediaPlayer();
+            mySource.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            // need a prepare call here
+            // prepare is a blocking call!  We're fine with that, but if you're not you can use perpareAsyn()
+            // mySource.setOnPreparedListener(new MyOnPreparedListener())
+
+            try {
+                Log.e("XappTest","Settinf file: "+f.getAbsolutePath());
+                mySource.setDataSource(f.getAbsolutePath());
+                mySource.prepare();
+
+            } catch(IOException exception) {
+                Log.e(TAG,Log.getStackTraceString(exception));
+            }
+        }
     }
 
     /**
@@ -75,6 +99,7 @@ public class MediaPlayerSource implements OutputSource {
     public MediaPlayerSource(FileDescriptor fd) {
         try {
             mySource = new MediaPlayer();
+            mySource.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mySource.setDataSource(fd);
             mySource.prepare();
         } catch(IOException exception) {

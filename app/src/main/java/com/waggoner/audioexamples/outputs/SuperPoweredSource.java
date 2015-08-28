@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.waggoner.audioexamples.core.OutputSource;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -59,6 +60,11 @@ public class SuperPoweredSource implements OutputSource {
 
     @Override
     public void destroy() {
+
+    }
+
+    @Override
+    public void setPlaybackFile(File f) {
 
     }
 

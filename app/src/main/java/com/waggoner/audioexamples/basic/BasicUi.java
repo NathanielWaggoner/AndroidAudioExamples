@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.waggoner.audioexamples.inputs.MediaRecorderInput;
 import com.waggoner.audioexamples.outputs.AudioTrackSource;
+import com.waggoner.audioexamples.outputs.MediaPlayerSource;
 import com.waggoner.audioexamples.ui.SimpleUi;
 import com.waggoner.audioexamples.util.FileUtil;
 
@@ -22,6 +24,7 @@ public class BasicUi implements SimpleUi {
 
     Context ctx;
     boolean recording = false;
+    boolean mediaRecording = false;
     BasicMixer mixer;
     ViewGroup rootView;
 
@@ -74,10 +77,10 @@ public class BasicUi implements SimpleUi {
         });
 
         final Button startStopRecord = new Button(ctx);
-        startStopRecord.setText("Start Recording");
+        startStopRecord.setText("Start AudioTrack Recording");
 
         final Button playRecord = new Button(ctx);
-        playRecord.setText("Play Record");
+        playRecord.setText("Play AduioTrack Record");
 
 
         startStopRecord.setOnClickListener(new View.OnClickListener() {
@@ -86,11 +89,11 @@ public class BasicUi implements SimpleUi {
                 recording = !recording;
                 if (recording) {
                     mixer.inputs[0].startInput();
-                    startStopRecord.setText("Stop Recording");
+                    startStopRecord.setText("Stop AudioTrack Recording");
                 } else {
                     mixer.inputs[0].stopInput();
-                    startStopRecord.setText("Start Recording");
-                    ((AudioTrackSource) mixer.channels[4].getAudioSource()).setPlaybackFile(getFileToPlay(BasicUi.this.ctx));
+                    startStopRecord.setText("Start AudioTrack Recording");
+                    ((AudioTrackSource) mixer.channels[4].getAudioSource()).setPlaybackFile(getFileToPlay(BasicUi.this.ctx,null));
                 }
             }
         });
@@ -104,27 +107,81 @@ public class BasicUi implements SimpleUi {
             }
         });
 
+
+        final Button startStopMediaRecord = new Button(ctx);
+        startStopMediaRecord.setText("Start MediaRecord Recording");
+        startStopMediaRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaRecording = !mediaRecording;
+                if (mediaRecording) {
+                    mixer.inputs[1].startInput();
+                    startStopMediaRecord.setText("Stop MediaRecord Recording");
+                } else {
+                    mixer.inputs[1].stopInput();
+                    startStopMediaRecord.setText("Start MediaRecord Recording");
+                    ((MediaPlayerSource) mixer.channels[5].getAudioSource()).setPlaybackFile(getFileToPlay(BasicUi.this.ctx, MediaRecorderInput.THREE_GP_FILE_DIRECTORY));
+                }
+
+            }
+        });
+
+        final Button playMediaRecord = new Button(ctx);
+        playMediaRecord.setText("Play MediaRecord Record");
+        playMediaRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mixer.channels[5].play();
+                playRecord.setText("Media Recording Playing");
+            }
+        });
+
         layout.addView(btn);
         layout.addView(second);
         layout.addView(third);
         layout.addView(fourth);
         layout.addView(startStopRecord);
         layout.addView(playRecord);
+        layout.addView(startStopMediaRecord);
+        layout.addView(playMediaRecord);
 
         return layout;
 
     }
+    public static File getFileToPlay(Context ctx, String dir) {
+        File newDir = FileUtil.getRecordingsFile(ctx);
+        File toPlay = null;
+        if(dir!= null) {
+            File mDir = new File(newDir.getAbsolutePath() + File.separator + dir + File.separator);
+            Log.e("XapPtest","Looking in file: "+mDir.getAbsolutePath());
+            toPlay = getFileToPlay(mDir);
+        } else {
+            toPlay = getFileToPlay(newDir);
+        }
+        return toPlay;
+    }
 
-    public static File getFileToPlay(Context ctx) {
-        File dir = FileUtil.getRecordingsFile(ctx);
+    public static File getFileToPlay(File dir) {
         String[] files = dir.list();
         String file = null;
         if (files.length > 0) {
+            for (int i = files.length-1; i>0; i--) {
+                File f = new File(files[i]);
+                Log.e("XapPtest", "Looking at file: " + f.getAbsolutePath());
+                if (!f.isDirectory()) {
+                    file = files[i];
+                    break;
+                }
+            }
             Log.e("Xapptest", Arrays.toString(files));
-            file = files[files.length - 1];
         }
-        return new File(dir.getAbsolutePath()+File.separator+file);
+        if(file== null) {
+            return null;
+        }
+        Log.e("XapPTest","returnign file: "+dir.getAbsolutePath() + File.separator + file);
+        return new File(dir.getAbsolutePath() + File.separator + file);
     }
+
 
     @Override
     public void destoryUi() {

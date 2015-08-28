@@ -17,7 +17,7 @@ public class BasicExample {
         /**
          * Set up our drum mixer which handles the sounds
          */
-        drumMixer = new BasicMixer(BasicMixer.DEFAULT_NUM_CHANNELS,1);
+        drumMixer = new BasicMixer(BasicMixer.DEFAULT_NUM_CHANNELS,2);
         drumMixer.generateDefaultChannels(context);
 
         /**
