@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.util.Log;
 
+import com.waggoner.audioexamples.basic.AudioTrackBufferCallback;
 import com.waggoner.audioexamples.core.OutputSource;
 
 import java.io.File;
@@ -22,6 +23,8 @@ public class AudioTrackSource implements OutputSource {
     AudioTrack mAudioTrack;
     String filePath;
 
+    AudioTrackBufferCallback brt;
+
     AtomicBoolean play = new AtomicBoolean(false);
     // file sample rate
     int sampleRate;
@@ -35,6 +38,10 @@ public class AudioTrackSource implements OutputSource {
     FileInputStream fis;
 
     public boolean isPlaybackReady = false;
+
+    public void setBrt(AudioTrackBufferCallback brt) {
+        this.brt = brt;
+    }
 
     /**
      * Constructor for dealing with files.  We're only going to use this on our own files right now, so its not set up
@@ -72,6 +79,10 @@ public class AudioTrackSource implements OutputSource {
     public void playAudio() {
         resetTrack();
         setUpFileStream();
+
+        // configure byte[] source
+        // pollByte[] source
+        // write out
         playbackThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -93,6 +104,16 @@ public class AudioTrackSource implements OutputSource {
         playbackThread.start();
     }
 
+    public void playAudioFunnyStyle(){
+        resetTrack();
+        play.set(true);
+        mAudioTrack.play();
+    }
+
+
+    public void handleShortArray(short[] shorts) {
+        mAudioTrack.write(shorts,0,shorts.length);
+    }
     public void resetTrack() {
         if(play.get()) {
             play.set(false);
@@ -106,7 +127,7 @@ public class AudioTrackSource implements OutputSource {
     }
     @Override
     public void stopAudio() {
-
+        resetTrack();
     }
 
     @Override

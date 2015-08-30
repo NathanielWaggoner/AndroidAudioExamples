@@ -25,6 +25,7 @@ import java.io.File;
 public class BasicMixer implements Mixer {
 
     public static final int DEFAULT_NUM_CHANNELS = 6;
+    public static final int DEFAULT_NUM_INPUTS = 3;
     /**
      * TODO:
      * <p/>
@@ -56,6 +57,7 @@ public class BasicMixer implements Mixer {
 
         inputs[0] = new AudioRecordInput(FileUtil.generateRecordingsFileName(context,null));
         inputs[1] = new MediaRecorderInput(context);
+        inputs[2] = new AudioRecordInput(new AudioTrackBufferCallback());
     }
 
     @Override

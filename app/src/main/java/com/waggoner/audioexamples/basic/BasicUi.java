@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.waggoner.audioexamples.inputs.AudioRecordInput;
 import com.waggoner.audioexamples.inputs.MediaRecorderInput;
 import com.waggoner.audioexamples.outputs.AudioTrackSource;
 import com.waggoner.audioexamples.outputs.MediaPlayerSource;
@@ -93,7 +94,7 @@ public class BasicUi implements SimpleUi {
                 } else {
                     mixer.inputs[0].stopInput();
                     startStopRecord.setText("Start AudioTrack Recording");
-                    ((AudioTrackSource) mixer.channels[4].getAudioSource()).setPlaybackFile(getFileToPlay(BasicUi.this.ctx,null));
+                    ((AudioTrackSource) mixer.channels[4].getAudioSource()).setPlaybackFile(getFileToPlay(BasicUi.this.ctx, null));
                 }
             }
         });
@@ -136,6 +137,25 @@ public class BasicUi implements SimpleUi {
             }
         });
 
+        final Button roundTrip = new Button(ctx);
+        roundTrip.setText("Start Round Trip");
+        roundTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mixer.inputs[2].isRecording()) {
+                    roundTrip.setText("Start Round Trip");
+
+                    mixer.inputs[2].stopInput();
+                    mixer.inputs[2] = new AudioRecordInput(new AudioTrackBufferCallback());
+                }else {
+                    roundTrip.setText("Stop Round Trip");
+
+                    ((AudioRecordInput) mixer.inputs[2]).mInputBufferCallback.prepare();
+                    mixer.inputs[2].startInput();
+                }
+            }
+        });
+
         layout.addView(btn);
         layout.addView(second);
         layout.addView(third);
@@ -144,7 +164,7 @@ public class BasicUi implements SimpleUi {
         layout.addView(playRecord);
         layout.addView(startStopMediaRecord);
         layout.addView(playMediaRecord);
-
+        layout.addView(roundTrip);
         return layout;
 
     }

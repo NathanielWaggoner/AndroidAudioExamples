@@ -50,7 +50,7 @@ public class AudioRecordInput implements InputSource {
     int mOutputType;
 
 
-    InputBufferCallback mInputBufferCallback;
+    public InputBufferCallback mInputBufferCallback;
 
     public static String generateDefaultFileName() {
         return "stupid recording is stupid";
@@ -68,6 +68,11 @@ public class AudioRecordInput implements InputSource {
          */
     }
 
+    @Override
+    public boolean isRecording() {
+        return isRecording.get();
+    }
+
     /**
      * Helper constructor for a write to file behavior
      * @param fileName
@@ -75,6 +80,7 @@ public class AudioRecordInput implements InputSource {
     public AudioRecordInput(String fileName) {
         this(OUTPUT_TYPE_FILE, new FileWriterCallback(fileName));
     }
+
 
     /**
      * Helper constructor for a write to custom calblack behavior
@@ -125,6 +131,7 @@ public class AudioRecordInput implements InputSource {
     }
     @Override
     public boolean startInput() {
+
         mInputBufferCallback.prepare();
         if(mInputBufferCallback == null) {
             throw new RuntimeException("No InputBufferCallback set for audio handling");
