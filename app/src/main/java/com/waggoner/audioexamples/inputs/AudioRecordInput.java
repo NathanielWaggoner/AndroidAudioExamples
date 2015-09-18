@@ -22,21 +22,20 @@ public class AudioRecordInput implements InputSource {
     public static final int OUTPUT_TYPE_FILE=0;
     public static final int OUTPUT_TYPE_CALLBACK=1;
     /**
-     * 44100 is the only sample rate garunteed to be available on all devices.
+     * 44100 is the only sample rate garunteed to be available on all devices... supposedly
      * http://developer.android.com/reference/android/media/AudioRecord.html#AudioRecord(int,%20int,%20int,%20int,%20int)
-     *
-     * I believe this may actuall be kinda of... falsish..
-     */
+     **/
     private static final int INPUT_SOURCE = MediaRecorder.AudioSource.MIC;
-    public static final int SAMPLE_RATE = 16000;
+    public static final int SAMPLE_RATE = 16000; // this is a good number typically for cross device support
     private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     static int BufferElements2Rec = 1024;
     static int BytesPerElement = 2;
     AudioRecord record;
 
-
+    // Notice anything wrong here?
     private LinkedBlockingQueue<short[]> audioPassBufferList;
+
 
     /**
      * We never want to do processing on the same thread that we do polling.  Device performance at this level is very, very unpredictable so
@@ -114,6 +113,7 @@ public class AudioRecordInput implements InputSource {
         mOutputType = outputType;
         mInputBufferCallback = callback;
         isRecording = new AtomicBoolean(false);
+        // this seems wrong
         audioPassBufferList = new LinkedBlockingQueue<short[]>();
         record = new AudioRecord(audioSource, sampleRateInHz, channelConfig, audioFormat,bufferSizeInBytes);
 
@@ -149,6 +149,7 @@ public class AudioRecordInput implements InputSource {
         while (audioPassBufferList != null && isRecording.get()) {
             // gets the voice output from microphone to byte format
             record.read(sData, 0, BufferElements2Rec);
+            // get it yet?
             audioPassBufferList.offer(sData);
         }
     }

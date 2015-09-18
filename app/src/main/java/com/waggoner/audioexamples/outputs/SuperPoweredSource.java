@@ -20,16 +20,20 @@ public class SuperPoweredSource implements OutputSource {
 
     public SuperPoweredSource(Context ctx, int resource) {
         String samplerateString = null, buffersizeString = null;
+
+        //  very important to tie your buffer sizes and smaple rates tot he device is possible.
         if (Build.VERSION.SDK_INT >= 17) {
             AudioManager audioManager = (AudioManager) ctx.getSystemService(Context.AUDIO_SERVICE);
             samplerateString = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
             buffersizeString = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
-            Log.e("XappTest", "SysSampleRate: " + samplerateString + " SysBuffSize: " + buffersizeString);
         }
+        // all devices are supposed to support 44100, and 512 is a typically conveniest buffer - neither of these is garunteed to be correct.
         if (samplerateString == null) samplerateString = "44100";
         if (buffersizeString == null) buffersizeString = "512";
+
+        // there's no C api's for hitting raw directly, you have to pass in
         AssetFileDescriptor fd0 = ctx.getResources().openRawResourceFd(resource);
-        Log.e("XappTest", "FD startOffset: " + fd0.getStartOffset() + " and length: " + fd0.getLength());
+
         long[] params = {
                 fd0.getStartOffset(),
                 fd0.getLength(),

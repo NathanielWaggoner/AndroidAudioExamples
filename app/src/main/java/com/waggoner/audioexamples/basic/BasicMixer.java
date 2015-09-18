@@ -50,10 +50,15 @@ public class BasicMixer implements Mixer {
         src.setPlaybackFile(BasicUi.getFileToPlay(FileUtil.getRecordingsFile(context)));
         setChannel(4, new Drum(src, null));
 
+
         File f = BasicUi.getFileToPlay(context, MediaRecorderInput.THREE_GP_FILE_DIRECTORY);
-        Uri uri = Uri.parse(f.getAbsolutePath());
-        MediaPlayerSource mediaRecordPlaybackSrc = new MediaPlayerSource(context, uri);
-        setChannel(5, new Drum(mediaRecordPlaybackSrc, null));
+        if(f!=null) {
+            Uri uri = Uri.parse(f.getAbsolutePath());
+            MediaPlayerSource mediaRecordPlaybackSrc = new MediaPlayerSource(context, uri);
+            setChannel(5, new Drum(mediaRecordPlaybackSrc, null));
+        } else  {
+
+        }
 
         inputs[0] = new AudioRecordInput(FileUtil.generateRecordingsFileName(context,null));
         inputs[1] = new MediaRecorderInput(context);

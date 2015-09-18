@@ -11,6 +11,7 @@ import com.waggoner.audioexamples.inputs.AudioRecordInput;
 import com.waggoner.audioexamples.inputs.MediaRecorderInput;
 import com.waggoner.audioexamples.outputs.AudioTrackSource;
 import com.waggoner.audioexamples.outputs.MediaPlayerSource;
+import com.waggoner.audioexamples.synth.SinSynth;
 import com.waggoner.audioexamples.ui.SimpleUi;
 import com.waggoner.audioexamples.util.FileUtil;
 
@@ -84,6 +85,15 @@ public class BasicUi implements SimpleUi {
         playRecord.setText("Play AduioTrack Record");
 
 
+        final Button playSinTone = new Button(ctx);
+        playSinTone.setText("Play Sin Tone");
+        playSinTone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SinSynth synth = new SinSynth(new AudioTrackSource());
+                synth.startGeneratingTone(440);
+            }
+        });
         startStopRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,12 +152,12 @@ public class BasicUi implements SimpleUi {
         roundTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mixer.inputs[2].isRecording()) {
+                if (mixer.inputs[2].isRecording()) {
                     roundTrip.setText("Start Round Trip");
 
                     mixer.inputs[2].stopInput();
                     mixer.inputs[2] = new AudioRecordInput(new AudioTrackBufferCallback());
-                }else {
+                } else {
                     roundTrip.setText("Stop Round Trip");
 
                     ((AudioRecordInput) mixer.inputs[2]).mInputBufferCallback.prepare();
@@ -165,6 +175,7 @@ public class BasicUi implements SimpleUi {
         layout.addView(startStopMediaRecord);
         layout.addView(playMediaRecord);
         layout.addView(roundTrip);
+        layout.addView(playSinTone);
         return layout;
 
     }

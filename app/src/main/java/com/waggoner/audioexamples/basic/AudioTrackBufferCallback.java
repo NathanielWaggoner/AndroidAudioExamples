@@ -14,7 +14,7 @@ public class AudioTrackBufferCallback implements InputBufferCallback {
     @Override
     public void prepare() {
         outputSource = new AudioTrackSource();
-        outputSource.playAudioFunnyStyle();
+        outputSource.playAudioFromExternalWriter();
     }
 
     @Override

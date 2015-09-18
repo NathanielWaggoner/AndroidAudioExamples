@@ -40,7 +40,6 @@ public class MediaRecorderInput implements InputSource{
         try {
             mRecorder.prepare();
         } catch (Exception e) {
-            Log.e("XappTest", "Shit failed: "+e.getStackTrace());
             Log.e("XappTest", Log.getStackTraceString(e));
         }
 

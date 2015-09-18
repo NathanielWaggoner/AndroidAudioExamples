@@ -14,14 +14,13 @@ static void playerEventCallbackA(void *clientData, SuperpoweredAdvancedAudioPlay
     }; if(event == SuperpoweredAdvancedAudioPlayerEvent_EOF) {
         playerA->pause(0,0);
         playerA->seek(0);
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "EOF ");
-
+        __android_log_print(ANDROID_LOG_VERBOSE, "AudioExamples", "EOF ");
     } if(event == SuperpoweredAdvancedAudioPlayerEvent_DurationChanged) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "DurationChanged ");
+        __android_log_print(ANDROID_LOG_VERBOSE, "AudioExamples", "DurationChanged ");
     } if(event == SuperpoweredAdvancedAudioPlayerEvent_JogParameter) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "JogParameter ");
+        __android_log_print(ANDROID_LOG_VERBOSE, "AudioExamples", "JogParameter ");
     } if( event == SuperpoweredAdvancedAudioPlayerEvent_LoadSuccess) {
-        __android_log_print(ANDROID_LOG_VERBOSE, "XapPTest", "loadSuccess ");
+        __android_log_print(ANDROID_LOG_VERBOSE, "AudioExamples", "loadSuccess ");
 
     }
 
@@ -37,7 +36,7 @@ SuperpoweredExample::SuperpoweredExample(const char *path, int *params) : active
                                                                           volB(0.0f),
                                                                           volA(1.0f * headroom) {
     pthread_mutex_init(&mutex,
-                       NULL); // This will keep our player volumes and playback states in sync.
+                       NULL);
     unsigned int samplerate = params[2], buffersize = params[3];
     stereoBuffer = (float *) memalign(16, (buffersize + 16) * sizeof(float) * 2 );
     playerA = new SuperpoweredAdvancedAudioPlayer(&playerA, playerEventCallbackA, samplerate, 0);
@@ -72,6 +71,7 @@ bool SuperpoweredExample::process(short int *output, unsigned int numberOfSample
     return !silence;
 }
 
+// expose our
 extern "C" {
 JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_SuperpoweredExample(
         JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray offsetAndLength);
@@ -79,7 +79,9 @@ JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_onPlay
         JNIEnv *javaEnvironment, jobject self, jboolean play);
 }
 static SuperpoweredExample *example = NULL;
-// Android is not passing more than 2 custom parameters, so we had to pack file offsets and lengths into an array.
+// theres a lot going on here but the big ones are to understand the name mangling
+// JNIEnv is for thread local
+// JNIEnv cannot be shared between threads - you should get the JavaVM, you can do that using this lovely piece of code
 JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_SuperpoweredExample(
         JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray params) {
     // Convert the input jlong array to a regular int array.
@@ -94,6 +96,7 @@ JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_Superp
 
 }
 
+//
 JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_onPlayPause(
         JNIEnv *javaEnvironment, jobject self, jboolean play) {
     example->onPlayPause(play);

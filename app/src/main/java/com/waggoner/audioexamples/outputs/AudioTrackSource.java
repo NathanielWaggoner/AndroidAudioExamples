@@ -22,7 +22,7 @@ public class AudioTrackSource implements OutputSource {
     int BUFFER_SIZE = 512;
     AudioTrack mAudioTrack;
     String filePath;
-
+    Thread playbackThread;
     AudioTrackBufferCallback brt;
 
     AtomicBoolean play = new AtomicBoolean(false);
@@ -43,23 +43,15 @@ public class AudioTrackSource implements OutputSource {
         this.brt = brt;
     }
 
-    /**
-     * Constructor for dealing with files.  We're only going to use this on our own files right now, so its not set up
-     * to parse useful data or convert.  Our own recordings are all going to be 16bit pcm written straight to file so we can
-     * just do them and not fuss
-     */
     public AudioTrackSource() {
         mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 16000, 1, AudioFormat.ENCODING_PCM_16BIT,
                 BUFFER_SIZE, AudioTrack.MODE_STREAM);
     }
-    public AudioTrackSource(File file) {
-        this();
-
-    }
-
     @Override
     public void setPlaybackFile(File file) {
-        filePath = file.getAbsolutePath();
+        if(file!=null) {
+            filePath = file.getAbsolutePath();
+        }
 
     }
     public void setUpFileStream() {
@@ -71,8 +63,6 @@ public class AudioTrackSource implements OutputSource {
             Log.e("XapPtest", Log.getStackTraceString(e));
         }
     }
-
-    Thread playbackThread;
 
 
     @Override
@@ -91,7 +81,7 @@ public class AudioTrackSource implements OutputSource {
                     int n;
                     while (play.get()&& ((n = fis.read(bytes)) != -1)) {
                         mAudioTrack.write(bytes, 0, bytes.length);
-                    }
+                }
                     play.set(false);
                     mAudioTrack.stop();
                 } catch (Exception e) {
@@ -104,7 +94,7 @@ public class AudioTrackSource implements OutputSource {
         playbackThread.start();
     }
 
-    public void playAudioFunnyStyle(){
+    public void playAudioFromExternalWriter(){
         resetTrack();
         play.set(true);
         mAudioTrack.play();
@@ -112,8 +102,10 @@ public class AudioTrackSource implements OutputSource {
 
 
     public void handleShortArray(short[] shorts) {
+        Log.e("XapPTest","Should be writing sine waves");
         mAudioTrack.write(shorts,0,shorts.length);
     }
+
     public void resetTrack() {
         if(play.get()) {
             play.set(false);
