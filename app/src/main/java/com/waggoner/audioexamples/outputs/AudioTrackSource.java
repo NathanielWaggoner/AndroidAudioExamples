@@ -19,7 +19,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class AudioTrackSource implements OutputSource {
     public static String TAG = StaticAudioTrackSource.class.getName();
-    int BUFFER_SIZE = 512;
+    public static int BUFFER_SIZE = 512;
+    public static int SAMPLE_RATE = 16000;
+
     AudioTrack mAudioTrack;
     String filePath;
     Thread playbackThread;
@@ -44,7 +46,7 @@ public class AudioTrackSource implements OutputSource {
     }
 
     public AudioTrackSource() {
-        mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 16000, 1, AudioFormat.ENCODING_PCM_16BIT,
+        mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, SAMPLE_RATE, 1, AudioFormat.ENCODING_PCM_16BIT,
                 BUFFER_SIZE, AudioTrack.MODE_STREAM);
     }
     @Override
@@ -110,10 +112,12 @@ public class AudioTrackSource implements OutputSource {
         if(play.get()) {
             play.set(false);
             mAudioTrack.stop();
-            try {
-                playbackThread.join();
-            } catch(InterruptedException ie){
-                Log.e("XapPTest",Log.getStackTraceString(ie));
+            if(playbackThread!=null) {
+                try {
+                    playbackThread.join();
+                } catch (InterruptedException ie) {
+                    Log.e("XapPTest", Log.getStackTraceString(ie));
+                }
             }
         }
     }

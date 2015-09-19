@@ -82,7 +82,7 @@ static SuperpoweredExample *example = NULL;
 // theres a lot going on here but the big ones are to understand the name mangling
 // JNIEnv is for thread local
 // JNIEnv cannot be shared between threads - you should get the JavaVM, you can do that using this lovely piece of code
-JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_SuperpoweredExample(
+JNIEXPORT void Java_com_waggoner_audioexamples_outputs_SuperPoweredSource_SuperpoweredExample (
         JNIEnv *javaEnvironment, jobject self, jstring apkPath, jlongArray params) {
     // Convert the input jlong array to a regular int array.
     jlong *longParams = javaEnvironment->GetLongArrayElements(params, JNI_FALSE);
